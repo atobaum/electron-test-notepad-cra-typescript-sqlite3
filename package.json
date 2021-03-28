@@ -26,7 +26,7 @@
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
   },
-  "main": "public/electron.js",
+  "main": "electron/main.js",
   "homepage": "./",
   "scripts": {
     "react-start": "export BROWSER=none && craco start",
