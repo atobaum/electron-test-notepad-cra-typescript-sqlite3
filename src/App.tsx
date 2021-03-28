@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
-import { notesSlice, RootState, notesAdapter, fetchNotes } from "./store";
-import Editor from "./components/Editor";
 import styled from "@emotion/styled";
+
+import "./App.css";
+import Editor from "./components/Editor";
+import { getNotes, selectNote, loadNotes } from "./store/notes";
 
 const List = styled.ol`
   height: 100%;
@@ -26,12 +27,10 @@ const Layout = styled.div`
 function App() {
   const dispatch = useDispatch();
 
-  const notes = useSelector((state: RootState) =>
-    notesAdapter.getSelectors().selectAll(state.notes)
-  );
+  const notes = useSelector(getNotes);
 
   useEffect(() => {
-    dispatch(fetchNotes());
+    dispatch(loadNotes());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -41,7 +40,7 @@ function App() {
         {notes.map((note) => (
           <li
             onClick={() => {
-              dispatch(notesSlice.actions.selectNote(note.id));
+              dispatch(selectNote(note.id));
             }}
           >
             <h3>{note.title}</h3>

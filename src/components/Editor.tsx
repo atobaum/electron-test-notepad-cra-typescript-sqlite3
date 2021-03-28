@@ -4,24 +4,13 @@ import { useForm, Controller } from "react-hook-form";
 import { TextField, Switch, FormControlLabel } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 
-import {
-  addNote,
-  deleteNote,
-  notesSlice,
-  RootState,
-  updateNote,
-} from "../store";
+import { addNote, deleteNote, notesSlice, updateNote } from "../store/notes";
+import { getSelectedNote } from "../store/notes";
 
-interface EditorProps {
-  id?: number;
-}
-
-export default function Editor({ id }: EditorProps) {
+export default function Editor() {
   const dispatch = useDispatch();
 
-  const selectedNote = useSelector(
-    (state: RootState) => state.notes.selectedNote
-  );
+  const selectedNote = useSelector(getSelectedNote);
 
   const { reset, register, handleSubmit, control } = useForm<{
     content: string;
@@ -38,7 +27,6 @@ export default function Editor({ id }: EditorProps) {
     <div>
       <form
         onSubmit={handleSubmit((data) => {
-          // console.log(data);
           if (selectedNote)
             dispatch(updateNote({ ...data, id: selectedNote.id }));
           else dispatch(addNote(data));
