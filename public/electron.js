@@ -3,17 +3,20 @@ const path = require("path");
 const url = require("url");
 const isDev = require("electron-is-dev");
 
+require("./db");
+
 let mainWindow;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
-    width: 600,
+    width: 1000,
     height: 600,
     show: false,
+    title: "electron testA",
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModuel: true,
-      devToold: isDev,
+      contextIsolation: false,
+      enableRemoteModule: true,
     },
   });
   mainWindow.loadURL(
